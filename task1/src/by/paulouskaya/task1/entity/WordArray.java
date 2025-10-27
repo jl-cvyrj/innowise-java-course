@@ -4,16 +4,17 @@ import java.util.Arrays;
 
 public class WordArray {
 	
-	private static final int default_capacity = 20;
+	private static final int DEFAULT_CAPACITY = 20;
+	private static long nextId = 1;
 	private final long wordArrayID;
 	private String[] words;
 	private int size;
 	
-	protected WordArray() {
-		this.wordArrayID = IdGenerator.generateId();
-		this.words = new String[default_capacity];
-		this.size = 0;
-	}
+	public WordArray() {
+        this.wordArrayID = nextId++;
+        this.words = new String[DEFAULT_CAPACITY];
+        this.size = 0;
+    }
 	
 	public void addWord(String word) {
 		if (this.size >= this.words.length) {
