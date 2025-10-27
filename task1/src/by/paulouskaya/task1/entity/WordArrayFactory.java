@@ -1,4 +1,4 @@
-package entity;
+package by.paulouskaya.task1.entity;
 
 public class WordArrayFactory {
 	

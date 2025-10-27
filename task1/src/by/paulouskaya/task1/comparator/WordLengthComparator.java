@@ -1,4 +1,4 @@
-package comparators;
+package by.paulouskaya.task1.comparator;
 
 import java.util.Comparator;
 

@@ -1,14 +1,16 @@
-package entity;
+package by.paulouskaya.task1.entity;
 
 import java.util.Arrays;
 
 public class WordArray {
 	
 	private static final int default_capacity = 20;
+	private final long wordArrayID;
 	private String[] words;
 	private int size;
 	
 	protected WordArray() {
+		this.wordArrayID = IdGenerator.generateId();
 		this.words = new String[default_capacity];
 		this.size = 0;
 	}
@@ -21,7 +23,7 @@ public class WordArray {
 	}
 	
 	public String[] getWords() {
-		return this.words;
+		return this.words.clone();
 	}
 	
 	public int getSize() {
@@ -29,7 +31,7 @@ public class WordArray {
 	}
 	
 	public void setWords(String[] words) {
-		this.words = words;
+		this.words = words.clone();
 	}
 	
 	public void setSize(int size) {
