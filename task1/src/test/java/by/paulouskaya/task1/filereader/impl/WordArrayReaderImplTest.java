@@ -20,110 +20,140 @@ public class WordArrayReaderImplTest {
     }
 
     @Test
-    public void testReadFile_NullPath() {
-        assertThrows(WordArrayException.class, () -> {
-            reader.readFile(null);
-        });
+    public void testReadFile_NullPathThrowsException() {
+        assertThrows(WordArrayException.class, () -> reader.readFile(null));
     }
 
     @Test
-    public void testReadFile_EmptyPath() {
-        assertThrows(WordArrayException.class, () -> {
-            reader.readFile("");
-        });
+    public void testReadFile_EmptyPathThrowsException() {
+        assertThrows(WordArrayException.class, () -> reader.readFile(""));
     }
 
     @Test
-    public void testReadFile_BlankPath() {
-        assertThrows(WordArrayException.class, () -> {
-            reader.readFile("   ");
-        });
+    public void testReadFile_BlankPathThrowsException() {
+        assertThrows(WordArrayException.class, () -> reader.readFile("   "));
     }
 
     @Test
-    public void testReadFile_NonExistentFile() {
-        assertThrows(WordArrayException.class, () -> {
-            reader.readFile("nonexistent.txt");
-        });
+    public void testReadFile_NonExistentFileThrowsException() {
+        assertThrows(WordArrayException.class, () -> reader.readFile("nonexistent.txt"));
     }
 
     @Test
-    public void testReadFile_EmptyFile(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_EmptyFileThrowsException(@TempDir Path tempDir) throws IOException {
         Path emptyFile = tempDir.resolve("empty.txt");
         Files.createFile(emptyFile);
-
-        assertThrows(WordArrayException.class, () -> {
-            reader.readFile(emptyFile.toString());
-        });
+        assertThrows(WordArrayException.class, () -> reader.readFile(emptyFile.toString()));
     }
 
     @Test
-    public void testReadFile_ValidFileWithMultipleLines(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_ValidFileReturnsCorrectSize(@TempDir Path tempDir) throws IOException {
         Path testFile = tempDir.resolve("test.txt");
         Files.write(testFile, List.of("hello world", "java programming", "test data"));
-
         List<String> result = reader.readFile(testFile.toString());
-
         assertEquals(3, result.size());
+    }
+
+    @Test
+    public void testReadFile_ValidFileReturnsCorrectFirstLine(@TempDir Path tempDir) throws IOException {
+        Path testFile = tempDir.resolve("test.txt");
+        Files.write(testFile, List.of("hello world", "java programming", "test data"));
+        List<String> result = reader.readFile(testFile.toString());
         assertEquals("hello world", result.get(0));
+    }
+
+    @Test
+    public void testReadFile_ValidFileReturnsCorrectSecondLine(@TempDir Path tempDir) throws IOException {
+        Path testFile = tempDir.resolve("test.txt");
+        Files.write(testFile, List.of("hello world", "java programming", "test data"));
+        List<String> result = reader.readFile(testFile.toString());
         assertEquals("java programming", result.get(1));
+    }
+
+    @Test
+    public void testReadFile_ValidFileReturnsCorrectThirdLine(@TempDir Path tempDir) throws IOException {
+        Path testFile = tempDir.resolve("test.txt");
+        Files.write(testFile, List.of("hello world", "java programming", "test data"));
+        List<String> result = reader.readFile(testFile.toString());
         assertEquals("test data", result.get(2));
     }
 
     @Test
-    public void testReadFile_FileWithBlankLines(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_FileWithBlankLinesReturnsCorrectSize(@TempDir Path tempDir) throws IOException {
         Path testFile = tempDir.resolve("test.txt");
         Files.write(testFile, List.of("first line", "", "   ", "last line"));
-
         List<String> result = reader.readFile(testFile.toString());
-
         assertEquals(2, result.size());
+    }
+
+    @Test
+    public void testReadFile_FileWithBlankLinesReturnsFirstLine(@TempDir Path tempDir) throws IOException {
+        Path testFile = tempDir.resolve("test.txt");
+        Files.write(testFile, List.of("first line", "", "   ", "last line"));
+        List<String> result = reader.readFile(testFile.toString());
         assertEquals("first line", result.get(0));
+    }
+
+    @Test
+    public void testReadFile_FileWithBlankLinesReturnsLastLine(@TempDir Path tempDir) throws IOException {
+        Path testFile = tempDir.resolve("test.txt");
+        Files.write(testFile, List.of("first line", "", "   ", "last line"));
+        List<String> result = reader.readFile(testFile.toString());
         assertEquals("last line", result.get(1));
     }
 
     @Test
-    public void testReadFile_FileWithOnlyBlankLines(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_FileWithOnlyBlankLinesThrowsException(@TempDir Path tempDir) throws IOException {
         Path testFile = tempDir.resolve("test.txt");
         Files.write(testFile, List.of("", "   ", "\t"));
-
-        assertThrows(WordArrayException.class, () -> {
-            reader.readFile(testFile.toString());
-        });
+        assertThrows(WordArrayException.class, () -> reader.readFile(testFile.toString()));
     }
 
     @Test
-    public void testReadFile_SingleLineFile(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_SingleLineFileReturnsCorrectSize(@TempDir Path tempDir) throws IOException {
         Path testFile = tempDir.resolve("test.txt");
         Files.write(testFile, List.of("single line"));
-
         List<String> result = reader.readFile(testFile.toString());
-
         assertEquals(1, result.size());
+    }
+
+    @Test
+    public void testReadFile_SingleLineFileReturnsCorrectContent(@TempDir Path tempDir) throws IOException {
+        Path testFile = tempDir.resolve("test.txt");
+        Files.write(testFile, List.of("single line"));
+        List<String> result = reader.readFile(testFile.toString());
         assertEquals("single line", result.get(0));
     }
 
     @Test
-    public void testReadFile_FileWithSpecialCharacters(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_FileWithSpecialCharactersReturnsCorrectSize(@TempDir Path tempDir) throws IOException {
         Path testFile = tempDir.resolve("test.txt");
         Files.write(testFile, List.of("line with @ symbols", "another line"));
-
         List<String> result = reader.readFile(testFile.toString());
-
         assertEquals(2, result.size());
-        assertEquals("line with @ symbols", result.get(0));
-        assertEquals("another line", result.get(1));
     }
 
     @Test
-    public void testReadFile_FileWithSpacesAtEnds(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_FileWithSpecialCharactersReturnsFirstLine(@TempDir Path tempDir) throws IOException {
+        Path testFile = tempDir.resolve("test.txt");
+        Files.write(testFile, List.of("line with @ symbols", "another line"));
+        List<String> result = reader.readFile(testFile.toString());
+        assertEquals("line with @ symbols", result.get(0));
+    }
+
+    @Test
+    public void testReadFile_FileWithSpacesAtEndsReturnsCorrectSize(@TempDir Path tempDir) throws IOException {
         Path testFile = tempDir.resolve("test.txt");
         Files.write(testFile, List.of("  line with spaces  ", "another line"));
-
         List<String> result = reader.readFile(testFile.toString());
-
         assertEquals(2, result.size());
+    }
+
+    @Test
+    public void testReadFile_FileWithSpacesAtEndsReturnsFirstLine(@TempDir Path tempDir) throws IOException {
+        Path testFile = tempDir.resolve("test.txt");
+        Files.write(testFile, List.of("  line with spaces  ", "another line"));
+        List<String> result = reader.readFile(testFile.toString());
         assertEquals("  line with spaces  ", result.get(0));
-        assertEquals("another line", result.get(1));
     }
 }
