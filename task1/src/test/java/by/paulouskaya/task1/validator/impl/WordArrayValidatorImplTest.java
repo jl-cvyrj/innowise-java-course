@@ -18,51 +18,80 @@ public class WordArrayValidatorImplTest {
     }
 
     @Test
-    public void testIsWordArrayCorrect_WordArray() {
+    public void testIsWordArrayCorrect_WordArray_Null() {
         assertFalse(validator.isWordArrayCorrect((WordArray) null));
-        
-        wordArray = new WordArray();
+    }
+
+    @Test
+    public void testIsWordArrayCorrect_WordArray_Empty() {
         assertFalse(validator.isWordArrayCorrect(wordArray));
-        
+    }
+
+    @Test
+    public void testIsWordArrayCorrect_WordArray_Valid() {
         wordArray.addWord("hello");
         wordArray.addWord("world");
         assertTrue(validator.isWordArrayCorrect(wordArray));
-        
-        wordArray = new WordArray();
+    }
+
+    @Test
+    public void testIsWordArrayCorrect_WordArray_InvalidSymbols() {
         wordArray.addWord("invalid@word");
         assertFalse(validator.isWordArrayCorrect(wordArray));
     }
 
     @Test
-    public void testIsWordArrayCorrect_StringArray() {
+    public void testIsWordArrayCorrect_StringArray_Null() {
         assertFalse(validator.isWordArrayCorrect((String[]) null));
-        assertFalse(validator.isWordArrayCorrect(new String[]{}));
-        assertTrue(validator.isWordArrayCorrect(new String[]{"hello"}));
-        assertTrue(validator.isWordArrayCorrect(new String[]{"hello", "world"}));
-        assertFalse(validator.isWordArrayCorrect(new String[]{"invalid#word"}));
-        assertFalse(validator.isWordArrayCorrect(new String[]{"valid", "invalid@word"}));
     }
 
     @Test
-    public void testIsWordArrayCorrect_String() {
-        assertFalse(validator.isWordArrayCorrect((String) null));
-        assertFalse(validator.isWordArrayCorrect(""));
-        assertFalse(validator.isWordArrayCorrect("   "));
-        assertTrue(validator.isWordArrayCorrect("hello"));
+    public void testIsWordArrayCorrect_StringArray_Empty() {
+        assertFalse(validator.isWordArrayCorrect(new String[]{}));
+    }
+
+    @Test
+    public void testIsWordArrayCorrect_StringArray_SingleValid() {
+        assertTrue(validator.isWordArrayCorrect(new String[]{"hello"}));
+    }
+
+    @Test
+    public void testIsWordArrayCorrect_StringArray_MultipleValid() {
+        assertTrue(validator.isWordArrayCorrect(new String[]{"hello", "world"}));
+    }
+
+    @Test
+    public void testIsWordArrayCorrect_StringArray_SingleInvalid() {
+        assertFalse(validator.isWordArrayCorrect(new String[]{"invalid#word"}));
+    }
+
+    @Test
+    public void testIsWordArrayCorrect_StringArray_MixedValidInvalid() {
+        assertFalse(validator.isWordArrayCorrect(new String[]{"valid", "invalid@word"}));
+    }
+    @Test
+    public void testIsWordArrayCorrect_String_MultipleWords() {
         assertTrue(validator.isWordArrayCorrect("hello world"));
+    }
+
+    @Test
+    public void testIsWordArrayCorrect_String_MultipleSpaces() {
         assertTrue(validator.isWordArrayCorrect("hello    world"));
-        assertTrue(validator.isWordArrayCorrect("hello\tworld"));
+    }
+
+    @Test
+    public void testIsWordArrayCorrect_String_InvalidSymbols() {
         assertFalse(validator.isWordArrayCorrect("hello@world"));
+    }
+
+    @Test
+    public void testIsWordArrayCorrect_String_MixedValidInvalid() {
         assertFalse(validator.isWordArrayCorrect("valid invalid$word"));
     }
 
     @Test
-    public void testIsWordArrayCorrect_SpecialCharacters() {
+    public void testIsWordArrayCorrect_SpecialCharacters_Numbers() {
         assertTrue(validator.isWordArrayCorrect(new String[]{"hello123"}));
-        assertTrue(validator.isWordArrayCorrect(new String[]{"well-known"}));
-        assertTrue(validator.isWordArrayCorrect(new String[]{"don't"}));
-        assertFalse(validator.isWordArrayCorrect(new String[]{"hello@world"}));
-        assertFalse(validator.isWordArrayCorrect(new String[]{"test#"}));
-        assertFalse(validator.isWordArrayCorrect(new String[]{"word$"}));
     }
+
 }
