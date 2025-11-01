@@ -89,23 +89,20 @@ public class WordArrayServiceImpl implements WordArrayService {
 			text += word;
 			text += " ";
 		}
-		return text;
+		return text.trim();
 	}
 	
-	static final char[] positive = {'a', 'e', 'i', 'o', 'u', 'y'};
-	static final char[] negative = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 
-			'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z'};
+	static final String POSITIVE_STR = "aeiouy";
+	static final String NEGATIVE_STR = "bcdfghjklmnpqrstvwxz";
 	
 	public int countPositiveWords(WordArray wordArray) {
 		int positiveWords = 0;
 		String[] words = wordArray.getWords();
 		for (String word : words) {
-			char[] wordChars = word.toCharArray();
-			for (char symb : positive) {
-				if (wordChars[0] == symb) {
-					positiveWords ++;
-				}
-			}
+			char firstChar = Character.toLowerCase(word.charAt(0));
+            if (POSITIVE_STR.indexOf(firstChar) != -1) {
+                positiveWords++;
+            }
 		}
 		return positiveWords;
 	}
@@ -114,12 +111,10 @@ public class WordArrayServiceImpl implements WordArrayService {
 		int negativeWords = 0;
 		String[] words = wordArray.getWords();
 		for (String word : words) {
-			char[] wordChars = word.toCharArray();
-			for (char symb : negative) {
-				if (wordChars[0] == symb) {
-					negativeWords ++;
-				}
-			}
+			char firstChar = Character.toLowerCase(word.charAt(0));
+            if (NEGATIVE_STR.indexOf(firstChar) != -1) {
+            	negativeWords++;
+            }
 		}
 		return negativeWords;
 	}

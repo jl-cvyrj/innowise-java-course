@@ -1,7 +1,6 @@
 package by.paulouskaya.task1.filereader.impl;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 import static org.junit.jupiter.api.Assertions.*;
 import java.nio.file.Path;
@@ -12,148 +11,176 @@ import by.paulouskaya.task1.exception.WordArrayException;
 
 public class WordArrayReaderImplTest {
 
-    private WordArrayReaderImpl reader;
-
-    @BeforeEach
-    public void setUp() {
-        reader = new WordArrayReaderImpl();
-    }
-
-    @Test
-    public void testReadFile_NullPathThrowsException() {
-        assertThrows(WordArrayException.class, () -> reader.readFile(null));
-    }
+    final WordArrayReaderImpl readerWordArray = new WordArrayReaderImpl();
 
     @Test
     public void testReadFile_EmptyPathThrowsException() {
-        assertThrows(WordArrayException.class, () -> reader.readFile(""));
+        try {
+            readerWordArray.readWordArrayFile("");
+            fail("Expected WordArrayException for empty path");
+        } catch (WordArrayException e) {
+        }
     }
 
     @Test
     public void testReadFile_BlankPathThrowsException() {
-        assertThrows(WordArrayException.class, () -> reader.readFile("   "));
+        try {
+            readerWordArray.readWordArrayFile("   ");
+            fail("Expected WordArrayException for blank path");
+        } catch (WordArrayException e) {
+        }
     }
 
     @Test
     public void testReadFile_NonExistentFileThrowsException() {
-        assertThrows(WordArrayException.class, () -> reader.readFile("nonexistent.txt"));
+        try {
+            readerWordArray.readWordArrayFile("nonexistent.txt");
+            fail("Expected WordArrayException for non-existent file");
+        } catch (WordArrayException e) {
+        }
     }
 
     @Test
-    public void testReadFile_EmptyFileThrowsException(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_EmptyFileThrowsException(@TempDir Path tempDir) {
         Path emptyFile = tempDir.resolve("empty.txt");
-        Files.createFile(emptyFile);
-        assertThrows(WordArrayException.class, () -> reader.readFile(emptyFile.toString()));
+        try {
+            Files.createFile(emptyFile);
+        } catch (IOException e) {
+            fail("Failed to create empty file");
+        }
+        try {
+            readerWordArray.readWordArrayFile(emptyFile.toString());
+            fail("Expected WordArrayException for empty file");
+        } catch (WordArrayException e) {
+        }
     }
 
     @Test
-    public void testReadFile_ValidFileReturnsCorrectSize(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_FileWithOnlyBlankLinesThrowsException(@TempDir Path tempDir) {
         Path testFile = tempDir.resolve("test.txt");
-        Files.write(testFile, List.of("hello world", "java programming", "test data"));
-        List<String> result = reader.readFile(testFile.toString());
-        assertEquals(3, result.size());
+        try {
+            Files.write(testFile, List.of("", "   ", "\t"));
+        } catch (IOException e) {
+            fail("Failed to create test file");
+        }
+        
+        try {
+            readerWordArray.readWordArrayFile(testFile.toString());
+            fail("Expected WordArrayException for file with only blank lines");
+        } catch (WordArrayException e) {
+        }
     }
 
     @Test
-    public void testReadFile_ValidFileReturnsCorrectFirstLine(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_ValidFileReturnsCorrectSize(@TempDir Path tempDir) throws WordArrayException {
         Path testFile = tempDir.resolve("test.txt");
-        Files.write(testFile, List.of("hello world", "java programming", "test data"));
-        List<String> result = reader.readFile(testFile.toString());
-        assertEquals("hello world", result.get(0));
+        try {
+            Files.write(testFile, List.of("hello world", "java programming", "test data"));
+        } catch (IOException e) {
+            fail("Failed to create test file");
+        }
+        List<String> result = readerWordArray.readWordArrayFile(testFile.toString());
+        int expected = 3;
+        int actual = result.size();
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void testReadFile_ValidFileReturnsCorrectSecondLine(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_ValidFileReturnsCorrectThirdLine(@TempDir Path tempDir) throws WordArrayException {
         Path testFile = tempDir.resolve("test.txt");
-        Files.write(testFile, List.of("hello world", "java programming", "test data"));
-        List<String> result = reader.readFile(testFile.toString());
-        assertEquals("java programming", result.get(1));
+        try {
+            Files.write(testFile, List.of("hello world", "java programming", "test data"));
+        } catch (IOException e) {
+            fail("Failed to create test file");
+        }
+        List<String> result = readerWordArray.readWordArrayFile(testFile.toString());
+        String expected = "test data";
+        String actual = result.get(2);
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void testReadFile_ValidFileReturnsCorrectThirdLine(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_FileWithBlankLinesReturnsCorrectSize(@TempDir Path tempDir) throws WordArrayException {
         Path testFile = tempDir.resolve("test.txt");
-        Files.write(testFile, List.of("hello world", "java programming", "test data"));
-        List<String> result = reader.readFile(testFile.toString());
-        assertEquals("test data", result.get(2));
+        try {
+            Files.write(testFile, List.of("first line", "", "   ", "last line"));
+        } catch (IOException e) {
+            fail("Failed to create test file");
+        }
+        List<String> result = readerWordArray.readWordArrayFile(testFile.toString());
+        int expected = 2;
+        int actual = result.size();
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void testReadFile_FileWithBlankLinesReturnsCorrectSize(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_FileWithBlankLinesReturnsLastLine(@TempDir Path tempDir) throws WordArrayException {
         Path testFile = tempDir.resolve("test.txt");
-        Files.write(testFile, List.of("first line", "", "   ", "last line"));
-        List<String> result = reader.readFile(testFile.toString());
-        assertEquals(2, result.size());
+        try {
+            Files.write(testFile, List.of("first line", "", "   ", "last line"));
+        } catch (IOException e) {
+            fail("Failed to create test file");
+        }
+        List<String> result = readerWordArray.readWordArrayFile(testFile.toString());
+        String expected = "last line";
+        String actual = result.get(1);
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void testReadFile_FileWithBlankLinesReturnsFirstLine(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_SingleLineFileReturnsCorrectContent(@TempDir Path tempDir) throws WordArrayException {
         Path testFile = tempDir.resolve("test.txt");
-        Files.write(testFile, List.of("first line", "", "   ", "last line"));
-        List<String> result = reader.readFile(testFile.toString());
-        assertEquals("first line", result.get(0));
+        try {
+            Files.write(testFile, List.of("single line"));
+        } catch (IOException e) {
+            fail("Failed to create test file");
+        }
+        List<String> result = readerWordArray.readWordArrayFile(testFile.toString());
+        String expected = "single line";
+        String actual = result.get(0);
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void testReadFile_FileWithBlankLinesReturnsLastLine(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_FileWithSpecialCharactersReturnsFirstLine(@TempDir Path tempDir) throws WordArrayException {
         Path testFile = tempDir.resolve("test.txt");
-        Files.write(testFile, List.of("first line", "", "   ", "last line"));
-        List<String> result = reader.readFile(testFile.toString());
-        assertEquals("last line", result.get(1));
+        try {
+            Files.write(testFile, List.of("line with @ symbols", "another line"));
+        } catch (IOException e) {
+            fail("Failed to create test file");
+        }
+        List<String> result = readerWordArray.readWordArrayFile(testFile.toString());
+        String expected = "line with @ symbols";
+        String actual = result.get(0);
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void testReadFile_FileWithOnlyBlankLinesThrowsException(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_FileWithSpacesAtEndsReturnsCorrectSize(@TempDir Path tempDir) throws WordArrayException {
         Path testFile = tempDir.resolve("test.txt");
-        Files.write(testFile, List.of("", "   ", "\t"));
-        assertThrows(WordArrayException.class, () -> reader.readFile(testFile.toString()));
+        try {
+            Files.write(testFile, List.of("  line with spaces  ", "another line"));
+        } catch (IOException e) {
+            fail("Failed to create test file");
+        }
+        List<String> result = readerWordArray.readWordArrayFile(testFile.toString());
+        int expected = 2;
+        int actual = result.size();
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void testReadFile_SingleLineFileReturnsCorrectSize(@TempDir Path tempDir) throws IOException {
+    public void testReadFile_FileWithSpacesAtEndsReturnsFirstLine(@TempDir Path tempDir) throws WordArrayException {
         Path testFile = tempDir.resolve("test.txt");
-        Files.write(testFile, List.of("single line"));
-        List<String> result = reader.readFile(testFile.toString());
-        assertEquals(1, result.size());
+        try {
+            Files.write(testFile, List.of("  line with spaces  ", "another line"));
+        } catch (IOException e) {
+            fail("Failed to create test file");
+        }
+        List<String> result = readerWordArray.readWordArrayFile(testFile.toString());
+        String expected = "  line with spaces  ";
+        String actual = result.get(0);
+        assertEquals(expected, actual);
     }
-
-    @Test
-    public void testReadFile_SingleLineFileReturnsCorrectContent(@TempDir Path tempDir) throws IOException {
-        Path testFile = tempDir.resolve("test.txt");
-        Files.write(testFile, List.of("single line"));
-        List<String> result = reader.readFile(testFile.toString());
-        assertEquals("single line", result.get(0));
-    }
-
-    @Test
-    public void testReadFile_FileWithSpecialCharactersReturnsCorrectSize(@TempDir Path tempDir) throws IOException {
-        Path testFile = tempDir.resolve("test.txt");
-        Files.write(testFile, List.of("line with @ symbols", "another line"));
-        List<String> result = reader.readFile(testFile.toString());
-        assertEquals(2, result.size());
-    }
-
-    @Test
-    public void testReadFile_FileWithSpecialCharactersReturnsFirstLine(@TempDir Path tempDir) throws IOException {
-        Path testFile = tempDir.resolve("test.txt");
-        Files.write(testFile, List.of("line with @ symbols", "another line"));
-        List<String> result = reader.readFile(testFile.toString());
-        assertEquals("line with @ symbols", result.get(0));
-    }
-
-    @Test
-    public void testReadFile_FileWithSpacesAtEndsReturnsCorrectSize(@TempDir Path tempDir) throws IOException {
-        Path testFile = tempDir.resolve("test.txt");
-        Files.write(testFile, List.of("  line with spaces  ", "another line"));
-        List<String> result = reader.readFile(testFile.toString());
-        assertEquals(2, result.size());
-    }
-
-    @Test
-    public void testReadFile_FileWithSpacesAtEndsReturnsFirstLine(@TempDir Path tempDir) throws IOException {
-        Path testFile = tempDir.resolve("test.txt");
-        Files.write(testFile, List.of("  line with spaces  ", "another line"));
-        List<String> result = reader.readFile(testFile.toString());
-        assertEquals("  line with spaces  ", result.get(0));
-    }
+    
 }

@@ -1,23 +1,35 @@
 package by.paulouskaya.task1.entity;
 
-import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
-import by.paulouskaya.task1.entity.WordArray;
-import by.paulouskaya.task1.exception.WordArrayException;
+import by.paulouskaya.task1.factory.impl.WordArrayFactoryImpl;
 
 public class WordArrayTest {
 	
+    final WordArrayFactoryImpl factoryWordArray = new WordArrayFactoryImpl(); 
+	
 	@Test
-	public void testAddWord(String word) {
-		 WordArray wordArray = new WordArray();
-		 
-		 wordArray.addWord("hello");
-		 wordArray.addWord("world");
-		    
-		 assertEquals(2, wordArray.getSize());
-		 assertArrayEquals(new String[]{"hello", "world"}, wordArray.getWords());
+    public void testAddWord() {
+        WordArray wordArray = factoryWordArray.createEmptyWordArray();
+        
+        wordArray.addWord("hello");
+        wordArray.addWord("world");
+        
+        int expected = 2;
+        int actual = wordArray.getSize();
+        assertEquals(expected, actual);
+    }
+	
+	@Test
+	public void testGetWords() {
+        WordArray wordArray = factoryWordArray.createEmptyWordArray();
+	    
+	    wordArray.addWord("hello");
+	    wordArray.addWord("world");
+	    
+	    String[] expected = new String[]{"hello", "world"};
+	    String[] actual = wordArray.getWords();
+	    assertArrayEquals(expected, actual);
 	}
+	
 }

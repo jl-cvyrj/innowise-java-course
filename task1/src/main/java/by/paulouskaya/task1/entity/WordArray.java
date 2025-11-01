@@ -12,6 +12,11 @@ public class WordArray {
 	private String[] words;
 	private int size;
 	
+	@Override
+	public String toString() {
+		return "WordArray [wordArrayID=" + wordArrayID + ", words=" + Arrays.toString(words) + ", size=" + size + "]";
+	}
+
 	public WordArray() {
         this.wordArrayID = idGenerator.generateId();
         this.words = new String[DEFAULT_CAPACITY];

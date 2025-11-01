@@ -11,7 +11,7 @@ import by.paulouskaya.task1.filereader.WordArrayReader;
 public class WordArrayReaderImpl implements WordArrayReader {
 
 	@Override
-	public List <String> readFile(String path) throws WordArrayException {
+	public List <String> readWordArrayFile(String path) throws WordArrayException {
 		if (path == null || path.isBlank()) {
 			throw new WordArrayException("file doesn't exist");
 		}

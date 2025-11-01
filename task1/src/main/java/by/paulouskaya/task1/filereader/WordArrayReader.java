@@ -7,5 +7,5 @@ public interface WordArrayReader {
 	
 	public static final String WORDS_DATA_REGEX = "[ ;,./|\\\\!?]+";
 	
-	public List <String> readFile(String path) throws WordArrayException;
+	public List <String> readWordArrayFile(String path) throws WordArrayException;
 }
