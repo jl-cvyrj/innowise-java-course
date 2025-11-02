@@ -92,9 +92,6 @@ public class WordArrayServiceImpl implements WordArrayService {
 		return text.trim();
 	}
 	
-	static final String POSITIVE_STR = "aeiouy";
-	static final String NEGATIVE_STR = "bcdfghjklmnpqrstvwxz";
-	
 	public int countPositiveWords(WordArray wordArray) {
 		int positiveWords = 0;
 		String[] words = wordArray.getWords();

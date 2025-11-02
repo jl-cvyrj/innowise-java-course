@@ -5,6 +5,9 @@ import by.paulouskaya.task1.exception.WordArrayException;
 
 public interface WordArrayService {
 	
+	static final String POSITIVE_STR = "aeiouy";
+	static final String NEGATIVE_STR = "bcdfghjklmnpqrstvwxz";
+	
 	public String findMaxWord(WordArray wordArray) throws WordArrayException;
 	
 	public String findMinWord(WordArray wordArray) throws WordArrayException;
