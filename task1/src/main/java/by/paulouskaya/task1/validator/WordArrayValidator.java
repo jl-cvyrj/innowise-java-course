@@ -8,8 +8,4 @@ public interface WordArrayValidator {
 	public static final String WORDS_VALID_SYMBOLS = "\\p{L}+";
 	
 	public boolean isWordArrayCorrect(WordArray wordArray);
-	
-	public boolean isWordArrayCorrect(String[] words);
-	
-	public boolean isWordArrayCorrect(String words);
 }

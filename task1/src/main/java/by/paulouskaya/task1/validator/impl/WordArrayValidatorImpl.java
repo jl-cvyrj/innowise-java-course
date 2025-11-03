@@ -10,11 +10,6 @@ public class WordArrayValidatorImpl implements WordArrayValidator {
 		if(words == null || words.length == 0) {
 			return false;
 		}
-		return isWordArrayCorrect(words);
-	}
-	
-	public boolean isWordArrayCorrect(String[] words) {
-		
 		if(words == null || words.length == 0) {
 			return false;
 		}
@@ -25,15 +20,5 @@ public class WordArrayValidatorImpl implements WordArrayValidator {
 			}
 		}
 		return true;
-	}
-	
-	public boolean isWordArrayCorrect(String text) {
-		
-		if(text == null || text.isBlank()) {
-			return false;
-		}
-		
-		String[] splitWords = text.split(WORDS_DATA_REGEX);
-		return isWordArrayCorrect(splitWords);
 	}
 }
