@@ -9,7 +9,7 @@ public class WordArrayValidatorImpl implements WordArrayValidator {
 		String[] words = wordArray.getWords();
 		if(words == null || words.length == 0) {
 			return false;
-		}		
+		}
 		for (String word : words) {
 			if (!word.matches(WORDS_VALID_SYMBOLS)) {
 				return false;
