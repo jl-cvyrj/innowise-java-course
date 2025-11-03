@@ -25,8 +25,8 @@ public class WordArrayRepositoryImpl implements WordArrayRepository{
 	}
 
 	@Override
-	public void sortWordArray(Comparator<? super WordArray> c) {
-		wordArrays.sort(c);
+	public void sortWordArray(Comparator<? super WordArray> comparator) {
+		wordArrays.sort(comparator);
 	}
 
 	@Override
