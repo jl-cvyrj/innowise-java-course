@@ -6,7 +6,7 @@ import by.paulouskaya.task1.util.impl.WordArrayGenerateIdImpl;
 
 public class WordArray {
 
-	private final long wordArrayID;
+	private final long id;
 	private static final WordArrayGeneratorId idGenerator = new WordArrayGenerateIdImpl();
 	private static final int DEFAULT_CAPACITY = 20;
 	private String[] words;
@@ -14,11 +14,11 @@ public class WordArray {
 	
 	@Override
 	public String toString() {
-		return "WordArray [wordArrayID=" + wordArrayID + ", words=" + Arrays.toString(words) + ", size=" + size + "]";
+		return "WordArray [wordArrayID=" + id + ", words=" + Arrays.toString(words) + ", size=" + size + "]";
 	}
 
 	public WordArray() {
-        this.wordArrayID = idGenerator.generateId();
+        this.id = idGenerator.generateId();
         this.words = new String[DEFAULT_CAPACITY];
         this.size = 0;
     }
@@ -28,6 +28,10 @@ public class WordArray {
 			this.words = Arrays.copyOf(this.words, this.words.length * 2);
 		}
 		this.words[this.size++] = word;
+	}
+	
+	public long getId() {
+		return this.id;
 	}
 	
 	public String[] getWords() {
