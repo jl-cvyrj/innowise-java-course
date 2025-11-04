@@ -1,9 +1,9 @@
 package by.paulouskaya.task1.repository.impl;
 
 import by.paulouskaya.task1.entity.WordArray;
-import by.paulouskaya.task1.repository.Specification;
+import by.paulouskaya.task1.repository.WordArraySpecification;
 
-public class intervalSizeSpecificationImpl implements Specification {
+public class intervalSizeSpecificationImpl implements WordArraySpecification {
 	
 	private long minId, maxId;
 	

@@ -2,10 +2,10 @@ package by.paulouskaya.task1.repository.impl;
 
 import by.paulouskaya.task1.entity.WordArray;
 import by.paulouskaya.task1.exception.WordArrayException;
-import by.paulouskaya.task1.repository.Specification;
+import by.paulouskaya.task1.repository.WordArraySpecification;
 import by.paulouskaya.task1.service.impl.WordArrayServiceImpl;
 
-public class greaterMaxWordSpesificationImpl implements Specification {
+public class greaterMaxWordSpesificationImpl implements WordArraySpecification {
 
 	private int maxLength;
 	private WordArrayServiceImpl wordArrayServiceImpl = new WordArrayServiceImpl();

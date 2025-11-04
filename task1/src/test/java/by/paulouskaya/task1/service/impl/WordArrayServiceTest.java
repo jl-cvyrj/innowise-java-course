@@ -30,7 +30,7 @@ public class WordArrayServiceTest {
     }
 
     @Test
-    public void testFindMaxWordWithEmptyArray() {
+    public void testFindMaxWordWithEmptyArray() throws WordArrayException {
         WordArray wordArray = factoryWordArray.createWordArrayFromArray(new String[]{});
         try {
             serviceWordArray.findMaxWord(wordArray);
@@ -59,7 +59,7 @@ public class WordArrayServiceTest {
     }
     
     @Test
-    public void testFindMinWordWithEmptyArray() {
+    public void testFindMinWordWithEmptyArray() throws WordArrayException {
         WordArray wordArray = factoryWordArray.createWordArrayFromArray(new String[]{});
         try {
             serviceWordArray.findMinWord(wordArray);            
@@ -112,7 +112,7 @@ public class WordArrayServiceTest {
     }
     
     @Test
-    public void testFindMediumWordWithEmptyArray() {
+    public void testFindMediumWordWithEmptyArray() throws WordArrayException {
         WordArray wordArray = factoryWordArray.createWordArrayFromArray(new String[]{});
         try {
             serviceWordArray.findMediumWord(wordArray);
@@ -141,7 +141,7 @@ public class WordArrayServiceTest {
     }
     
     @Test
-    public void testSumWordWithEmptyArray() {
+    public void testSumWordWithEmptyArray() throws WordArrayException {
         WordArray wordArray = factoryWordArray.createWordArrayFromArray(new String[]{});
         try {
             serviceWordArray.sumWords(wordArray);
@@ -152,7 +152,7 @@ public class WordArrayServiceTest {
     }
 
     @Test
-    public void testCountPositiveWords() {
+    public void testCountPositiveWords() throws WordArrayException {
         String[] words = new String[] {"apple", "orange", "banana", "umbrella", "cherry"};
         WordArray wordArray = factoryWordArray.createWordArrayFromArray(words);
         int expected = 3;
@@ -161,7 +161,7 @@ public class WordArrayServiceTest {
     }
 
     @Test
-    public void testCountPositiveWordsEmpty() {
+    public void testCountPositiveWordsEmpty() throws WordArrayException {
         WordArray wordArray = factoryWordArray.createWordArrayFromArray(new String[]{});
         int expected = 0;
         int actual = serviceWordArray.countPositiveWords(wordArray);
@@ -169,7 +169,7 @@ public class WordArrayServiceTest {
     }
 
     @Test
-    public void testCountNegativeWords() {
+    public void testCountNegativeWords() throws WordArrayException {
         String[] words = new String[] {"apple", "banana", "cherry", "dog", "elephant"};
         WordArray wordArray = factoryWordArray.createWordArrayFromArray(words);
         int expected = 3;
@@ -178,7 +178,7 @@ public class WordArrayServiceTest {
     }
 
     @Test
-    public void testCountNegativeWordsCaseSensitive() {
+    public void testCountNegativeWordsCaseSensitive() throws WordArrayException {
         String[] words = new String[] {"Apple", "banana"};
         WordArray wordArray = factoryWordArray.createWordArrayFromArray(words);
         int expected = 1;

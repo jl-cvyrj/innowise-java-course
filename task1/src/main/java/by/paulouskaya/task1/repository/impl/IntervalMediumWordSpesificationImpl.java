@@ -2,10 +2,10 @@ package by.paulouskaya.task1.repository.impl;
 
 import by.paulouskaya.task1.entity.WordArray;
 import by.paulouskaya.task1.exception.WordArrayException;
-import by.paulouskaya.task1.repository.Specification;
+import by.paulouskaya.task1.repository.WordArraySpecification;
 import by.paulouskaya.task1.service.impl.WordArrayServiceImpl;
 
-public class IntervalMediumWordSpesificationImpl implements Specification {
+public class IntervalMediumWordSpesificationImpl implements WordArraySpecification {
 
 	private long minMediumWord, maxMediumWord;
 	private WordArrayServiceImpl wordArrayServiceImpl = new WordArrayServiceImpl();

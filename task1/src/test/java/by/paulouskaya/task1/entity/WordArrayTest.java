@@ -2,6 +2,8 @@ package by.paulouskaya.task1.entity;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
+import by.paulouskaya.task1.exception.WordArrayException;
 import by.paulouskaya.task1.factory.impl.WordArrayFactoryImpl;
 
 public class WordArrayTest {
@@ -9,7 +11,7 @@ public class WordArrayTest {
     final WordArrayFactoryImpl factoryWordArray = new WordArrayFactoryImpl(); 
 	
 	@Test
-    public void testAddWord() {
+    public void testAddWord() throws WordArrayException {
         WordArray wordArray = factoryWordArray.createEmptyWordArray();
         
         wordArray.addWord("hello");
@@ -21,7 +23,7 @@ public class WordArrayTest {
     }
 	
 	@Test
-	public void testGetWords() {
+	public void testGetWords() throws WordArrayException {
         WordArray wordArray = factoryWordArray.createEmptyWordArray();
 	    
 	    wordArray.addWord("hello");

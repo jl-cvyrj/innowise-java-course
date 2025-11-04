@@ -5,7 +5,8 @@ import by.paulouskaya.task1.exception.WordArrayException;
 
 public interface WordArrayReader {
 	
-	public static final String WORDS_DATA_REGEX = "[ ;,./|\\\\!?]+";
+	String WORDS_DATA_REGEX = "[ ;,./|\\\\!?]+";
+	String DATA_DIRECTORY = "data";
 	
 	public List <String> readWordArrayFile(String path) throws WordArrayException;
 }

@@ -1,6 +1,9 @@
 package by.paulouskaya.task1.util;
 
-public interface WordArrayGeneratorId {
+public class WordArrayGeneratorId {
 	
-	long generateId();
+	public static long nextId = 1;
+	public synchronized long generateId() {
+		return nextId++;
+	}
 }
